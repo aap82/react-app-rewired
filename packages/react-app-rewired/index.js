@@ -39,6 +39,16 @@ const injectBabelPlugin = function(pluginName, config) {
   return config;
 };
 
+const injectBabelPreset = function(preset, config) {
+  const loader = getBabelLoader(config.module.rules);
+  if (!loader) {
+    console.log('babel-loader not found');
+    return config;
+  }
+  preset && loader.options.presets.push(preset);
+  return config;
+};
+
 const compose = function(...funcs) {
   if (funcs.length === 0) {
     return config => config;
@@ -56,6 +66,7 @@ module.exports = {
   loaderNameMatches,
   getBabelLoader,
   injectBabelPlugin,
+  injectBabelPreset,
   compose,
   paths
 };
